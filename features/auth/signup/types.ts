@@ -1,6 +1,6 @@
 export type signUpFormValues={
-    email:string,
+    email:string ,
     password:string,
-    confirmPassword:string,
+    confirmPassword:string ,
     name:string
 }
