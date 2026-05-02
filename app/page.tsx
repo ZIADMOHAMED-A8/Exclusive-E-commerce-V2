@@ -1,7 +1,11 @@
+"use client"
+import getItemsCartAction from "@/features/cart/actions/getCartItemsAction";
 import ItemContainer from "@/features/Products/components/itemContainer";
 import Image from "next/image";
 
 export default function Home() {
+  getItemsCartAction()
+  
   return (
     <>
     <div className="p-15">
