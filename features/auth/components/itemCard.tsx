@@ -17,7 +17,7 @@ export default function ItemCard({
   
   return (
     <article onClick={()=>{
-      dispatch(cartActions.removeItem({
+      dispatch(cartActions.addItem({
         id:item.id
       }))
     }} className="group flex w-56 shrink-0 flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md">
