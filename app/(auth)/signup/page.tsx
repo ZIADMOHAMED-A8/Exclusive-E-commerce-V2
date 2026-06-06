@@ -2,6 +2,7 @@ import Image from "next/image";
 import authImage from '@/public/images/auth_image.webp'
 import LoginForm from "@/features/auth/login/components/loginForm";
 import SignupForm from "@/features/auth/signup/components/signupForm";
+import { getToken } from "@/features/utils/auth/getToken";
 export default function SignUpPage() {
     return (
         <main className="mt-12 flex gap-36 items-start">

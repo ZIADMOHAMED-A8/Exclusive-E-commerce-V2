@@ -58,7 +58,7 @@ export default function CartPage() {
                                 />
                             </div>
                             <p className="text-sm font-medium text-zinc-900">
-                                {item.title}
+                                {item.title}{item.id}
                             </p>
                         </div>
 

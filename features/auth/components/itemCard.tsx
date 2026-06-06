@@ -5,6 +5,7 @@ import { Product } from "@/features/types";
 import toCurrency from "@/features/utils/toCurrency";
 import { useAppDispatch } from "@/store";
 import { cartActions } from "@/store/slices/cartSlice";
+import { useRouter } from "next/navigation";
 export default function ItemCard({
   children,
   item,
@@ -14,12 +15,13 @@ export default function ItemCard({
   const rating = Number(item.rating ?? 0);
   const safeRating = Number.isFinite(rating) ? rating : 0;
   const dispatch=useAppDispatch()
-  
+  const router=useRouter()
   return (
     <article onClick={()=>{
-      dispatch(cartActions.addItem({
-        id:item.id
-      }))
+      // dispatch(cartActions.addItem({
+      //   id:item.id
+      // }))
+      router.push(`/item/${item.id}`)
     }} className="group flex w-56 shrink-0 flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md">
       <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-zinc-50">
         <Image
