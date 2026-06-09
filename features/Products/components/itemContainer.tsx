@@ -27,7 +27,7 @@ export default function ItemContainer({
 
 }) {
   const { data, isPending, error } = useGetProducts(productsType);
-  const containerRef = useRef(HTMLDivElement)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   if (isPending) {
     return <p>laoding....</p>;
