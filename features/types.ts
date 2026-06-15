@@ -43,3 +43,13 @@ export type Product = {
   images: string[];
   thumbnail: string;
 };
+export type CheckoutForm = {
+  CardNumber: string;
+  CVV: string;
+  Expiry: string;
+
+  address: string;
+  city: string;
+  stateCode: string;
+  postalCode: string;
+};

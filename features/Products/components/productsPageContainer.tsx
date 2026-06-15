@@ -58,7 +58,7 @@ export default function ProductsPageContainer({
   const canGoNext = page < totalPages;
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 py-10">
+    <main className=" flex flex-col gap-8 px-6 py-10">
       <section className="flex flex-col gap-2">
         <p className="text-sm font-medium text-[#db4444]">Products</p>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -75,8 +75,8 @@ export default function ProductsPageContainer({
 
       {data.products.length ? (
         <section
-          className="grid w-full gap-x-6 gap-y-6 gap-6"
-          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
+          className="grid items-center justify-center w-full gap-6"
+          style={{ gridTemplateColumns: "repeat(4, 224px)" }}
         >
           {data.products.map((product: Product) => (
             <ItemCard key={product.id} item={product} />
@@ -118,6 +118,7 @@ export default function ProductsPageContainer({
         )}
 
         <Link
+        
           href={getProductsHref(page + 1, mode)}
           aria-disabled={!canGoNext}
           className={`rounded-md border px-4 py-2 text-sm font-medium ${

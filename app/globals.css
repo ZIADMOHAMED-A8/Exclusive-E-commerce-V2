@@ -1,5 +1,17 @@
 @import "tailwindcss";
+@source "../app";
+@source "../features";
+@source "../context";
+@source "../store";
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

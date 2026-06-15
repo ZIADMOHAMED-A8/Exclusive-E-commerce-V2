@@ -9,6 +9,7 @@ import { useRef } from "react";
 import NavigationArrows from "./navigationArrows";
 import StyledLabel from "./styledLabel";
 import CountDown from "./countDown";
+import Link from "next/link";
 
 export default function ItemContainer({
   productsType,
@@ -78,7 +79,7 @@ export default function ItemContainer({
       </div>
       {viewProductsButton &&
         <div className="flex justify-center">
-          <button className=" px-8 py-4 text-white  bg-[#db4444]">View All Products</button>
+          <button  className=" px-8 py-4 text-white  bg-[#db4444]"><Link href={'/products'}>View All Products</Link></button>
         </div>
       }
     </section>

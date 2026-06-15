@@ -20,6 +20,6 @@ export default async function loginAction(values: LoginFormValues) {
     cookieStore.set('accessToken', data.accessToken, { httpOnly: true, sameSite: 'lax', path: '/', maxAge: 60 * 60 * 24, })
     cookieStore.set('refreshToken', data.refreshToken, { httpOnly: true, sameSite: 'lax', path: '/', maxAge: 60 * 60 * 24, })
    
-    return data
+    return data ?? null
 
 }
