@@ -4,15 +4,16 @@ export default async function getItemsCartAction() {
 
   const localData = localStorage.getItem("cart");
   const cartProducts = localData ? JSON.parse(localData) : [];
-  const normalizedProducts = cartProducts.map((item:{
-    id:string,
-    quantity:string
+  if(cartProducts.length===0){return []}
+  const normalizedProducts = cartProducts.map((item: {
+    id: string,
+    quantity: string
   }) => ({
-  id: Number(item.id), 
-  quantity: item.quantity
-}))
-    console.log(cartProducts)
-  const res=await fetch('https://dummyjson.com/carts/add', {
+    id: Number(item.id),
+    quantity: item.quantity
+  }))
+  console.log(cartProducts)
+  const res = await fetch('https://dummyjson.com/carts/add', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -20,10 +21,11 @@ export default async function getItemsCartAction() {
       products: normalizedProducts
     })
   })
-  if(!res.ok){
-    throw new Error('something wrong happened')
+  const data = await res.json()
+
+  if (!res.ok) {
+    throw new Error(data?.message)
   }
-  const data=await res.json()
   return data
-  
+
 }

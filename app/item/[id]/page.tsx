@@ -1,5 +1,6 @@
 "use client";
 
+import useToast from "@/features/hooks/useToast";
 import useGetItem from "@/features/Item/hooks/useGetItem";
 import { Product } from "@/features/types";
 import { StarsDisplayer } from "@/features/utils/stardDisplayer";
@@ -20,6 +21,7 @@ const COLORS = [
 const SIZES = ["XS", "S", "M", "L", "XL"] as const;
 
 export default function ItemPage() {
+  const toast=useToast()
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const dispatch = useAppDispatch();
@@ -202,7 +204,8 @@ export default function ItemPage() {
 
               <button
                 type="button"
-                onClick={() =>
+                
+                onClick={() =>{
                   dispatch(
                     cartActions.addItem({
                       id: item.id,
@@ -211,6 +214,8 @@ export default function ItemPage() {
                       size: selectedSize,
                     })
                   )
+                  toast.success(`${quantity} ${item.title} Has Been Added To Your Cart. `)
+                  }
                 }
                 disabled={item.stock <= 0}
                 className="h-12 min-w-56 rounded-md bg-[#db4444] px-8 text-base font-medium text-white hover:bg-[#c63c3c] disabled:cursor-not-allowed disabled:opacity-60"

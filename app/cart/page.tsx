@@ -19,12 +19,11 @@ export default function CartPage() {
     const { data, isLoading, error } = UseGetCartItems();
     const dispatch = useAppDispatch();
     const cart = (data as { products?: CartItem[] } | null | undefined) ?? null;
-
     const gridCols =
         "grid grid-cols-[minmax(260px,1fr)_160px_160px_160px] items-center";
 
     if (isLoading) return <p>loading...</p>;
-    if (error) return <p>error loading cart</p>;
+    if (error) return <p>{error.message}</p>;
     if (!cart?.products?.length) return <p>Your cart is empty</p>;
 
   return (

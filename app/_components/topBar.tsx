@@ -4,6 +4,8 @@ import { ShoppingCart } from 'lucide-react';
 import SearchBar from "./searchBar/searchBar";
 import usegetUser from "@/features/auth/user/hooks/getUser";
 import useGetCategories from "@/features/Categories/UseGetCategories";
+import { useRouter } from "next/navigation"; // 1. Import useRouter
+import { handleLogout } from "@/features/utils/auth/logout";
 
 function TopbarLink({ name, src }: { name: string, src: string }) {
     return (
@@ -26,12 +28,35 @@ hover:after:w-full
     )
 }
 
+function LogoutButton() {
+
+ 
+
+    return (
+        <li className="
+relative
+after:absolute
+after:left-0
+after:top-full
+after:h-[2px]
+after:w-0
+after:bg-gray-400
+after:content-['']
+after:transition-all
+after:duration-500
+after:ease-in-out
+hover:after:w-full
+">
+            <button onClick={handleLogout} type="button">Log out</button>
+        </li>
+    )
+}
 
 export default function TopBar() {
     const { data: categories, isPending: categoriesLoading } = useGetCategories()
     const { data, isLoading: userLoading } = usegetUser()
 
-    if (!userLoading && !categoriesLoading) {
+    if (!categoriesLoading) {
         return (
             <nav className="flex justify-between px-16 pb-6 border-gray-300 items-center mt-6 border-b">
                 <header className="text-3xl font-bold ">Exclusive</header>
@@ -41,19 +66,14 @@ export default function TopBar() {
                     <TopbarLink name={categories?.at(-11)?.name ?? ""} src={`/products?mode=${categories?.at(-11)?.name ?? ""}`} />
                     <TopbarLink name={categories?.at(-12)?.name ?? ""} src={`/products?mode=${categories?.at(-12)?.name ?? ""}`} />
 
-
-
-
                     {!userLoading
                         ? data
-                            ? <TopbarLink name="Log Out" src="/signup" />
-                            : <TopbarLink name="Sign" src="/signup" />
-
+                            ? <LogoutButton></LogoutButton>
+                            : <TopbarLink name="Sign In" src="/signup" />
                         : ''}
                 </ul >
                 <SearchBar></SearchBar>
                 <Link href={"/cart"}> <ShoppingCart /></Link>
-
             </nav >
         )
     }

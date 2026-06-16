@@ -21,7 +21,7 @@ type PaymentForm = {
     Expiry: string;
 };
 
-export default function PaymentMethod() {
+export default function PaymentMethod({ price }: { price: string }) {
     const {
         watch,
         register,
@@ -40,7 +40,7 @@ export default function PaymentMethod() {
                 <Heading>Payment Information</Heading>
 
                 <p className="text-sm text-gray-500 mt-1">
-                    Enter your card details
+                    Enter your card details to pay <em className="font-bold  text-black"> {price}$</em>
                 </p>
             </div>
 

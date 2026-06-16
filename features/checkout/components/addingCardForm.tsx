@@ -66,6 +66,7 @@ export default function AddingCardForm({
             type="number"
             inputMode="numeric"
             placeholder="CVV"
+            maxLength={3}
             className="
               w-full
               h-14

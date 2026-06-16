@@ -1,14 +1,17 @@
 "use client"
 
 import UseGetCartItems from "../hooks/useGetCartItems";
+import { useRouter } from "next/navigation";
 
 
 export default function CartSummary() {
-    const { data, isLoading, error,isError } = UseGetCartItems();
-    if(isLoading){
+    const { data, isLoading, error, isError } = UseGetCartItems();
+    const router = useRouter()
+
+    if (isLoading) {
         return <p>loading...</p>
     }
-    if(isError){
+    if (isError) {
         return <p>{error.message}</p>
     }
 
@@ -39,6 +42,9 @@ export default function CartSummary() {
             </div>
 
             <button
+            onClick={()=>{
+                router.push('/checkout')
+            }}
                 type="button"
                 className="mt-10 w-full rounded bg-red-500 px-6 py-4 text-center text-base font-medium text-white hover:bg-red-600"
             >
