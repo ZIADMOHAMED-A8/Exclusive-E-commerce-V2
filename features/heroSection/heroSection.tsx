@@ -44,10 +44,10 @@ export default function HeroSection() {
 
     }
     function handleBackWardChange() {
-        console.log('ff')
+        console.log(active, "before")
 
         if (timer.current === null) return
-        setActive(prev => (prev - 1) % imagesArr.length)
+        setActive(prev => (prev - 1 + imagesArr.length) % imagesArr.length)
         console.log('gzr')
         clearInterval(timer.current)
         timer.current = setInterval(() => {
@@ -59,7 +59,7 @@ export default function HeroSection() {
     return (
         <section className='relative p-0'>
             <button onClick={() => {
-                handleForwardChange()
+                handleBackWardChange()
             }} className='rounded-4xl cursor-pointer bg-white p-2 opacity-50 absolute top-1/2 left-2 -translate-y-1/2 z-10'>
                 <ArrowLeft className='' />
             </button>
