@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRef } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import useGetCategories from "../UseGetCategories";
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -58,7 +60,32 @@ export default function CategoriesContainer() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   if (isPending) {
-    return <p>laoding....</p>;
+    return (
+      <section className="flex flex-col gap-8 p-4 overflow-hidden max-w-full">
+        <StyledLabel>Categories</StyledLabel>
+
+        <div className="flex justify-between gap-4 items-center">
+          <Skeleton width={260} height={36} />
+
+          <div className="flex gap-2">
+            <Skeleton circle width={40} height={40} />
+            <Skeleton circle width={40} height={40} />
+          </div>
+        </div>
+
+        <div className="flex gap-4 overflow-hidden">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div
+              key={index}
+              className="h-[145px] border basis-full sm:basis-[calc((100%-16px)/2)] md:basis-[calc((100%-48px)/4)] p-4 shrink-0 border-black/10 flex flex-col items-center justify-center gap-5"
+            >
+              <Skeleton circle width={56} height={56} />
+              <Skeleton width={100} height={18} />
+            </div>
+          ))}
+        </div>
+      </section>
+    );
   }
 
   if (error) {
@@ -72,15 +99,24 @@ export default function CategoriesContainer() {
   return (
     <section className="flex flex-col gap-8 p-4 overflow-hidden max-w-full">
       <StyledLabel>Categories</StyledLabel>
+
       <div className="flex justify-between gap-4 items-center">
-        <h1 className="text-2xl font-bold sm:text-3xl">Browse By Category</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">
+          Browse By Category
+        </h1>
+
         <div className="flex gap-2 items-center justify-end">
-          <NavigationArrows containerRef={containerRef}></NavigationArrows>
+          <NavigationArrows containerRef={containerRef} />
         </div>
       </div>
-      <div ref={containerRef} className="flex overflow-x-hidden gap-4">
+
+      <div
+        ref={containerRef}
+        className="flex overflow-x-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:overflow-x-hidden gap-4"
+      >
         {data.map((category) => {
-          const CategoryIcon = CATEGORY_ICONS[category.slug] ?? ShoppingBag;
+          const CategoryIcon =
+            CATEGORY_ICONS[category.slug] ?? ShoppingBag;
 
           return (
             <Link
@@ -88,8 +124,15 @@ export default function CategoriesContainer() {
               href={`/products?mode=${category.slug}`}
               className="h-[145px] border basis-full sm:basis-[calc((100%-16px)/2)] md:basis-[calc((100%-48px)/4)] p-4 shrink-0 border-black/40 flex flex-col items-center justify-center gap-5 px-3 text-center transition-colors hover:border-[#db4444]"
             >
-              <CategoryIcon size={56} strokeWidth={1.8} className="text-black" />
-              <span className="font-normal text-gray-600">{category.name}</span>
+              <CategoryIcon
+                size={56}
+                strokeWidth={1.8}
+                className="text-black"
+              />
+
+              <span className="font-normal text-gray-600">
+                {category.name}
+              </span>
             </Link>
           );
         })}

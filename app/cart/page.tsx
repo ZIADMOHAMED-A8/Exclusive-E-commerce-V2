@@ -5,7 +5,7 @@ import UseGetCartItems from "@/features/cart/hooks/useGetCartItems";
 import { useAppDispatch } from "@/store";
 import { cartActions } from "@/store/slices/cartSlice";
 import Image from "next/image";
-
+import Skeleton from "react-loading-skeleton";
 type CartItem = {
     id: number;
     title: string;
@@ -22,7 +22,62 @@ export default function CartPage() {
     const gridCols =
         "grid grid-cols-1 gap-4 md:grid-cols-[minmax(260px,1fr)_160px_160px_160px] md:items-center";
 
-    if (isLoading) return <p>loading...</p>;
+    if (isLoading) {
+  return (
+    <main className="mx-auto w-full max-w-6xl px-4 py-10 md:px-10">
+      <section className="flex flex-col gap-6">
+        {/* Header */}
+        <div className="hidden md:grid rounded-md border border-zinc-200 bg-white px-8 py-6 shadow-sm">
+          <Skeleton height={20} />
+        </div>
+
+        {/* Cart Items */}
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div
+            key={index}
+            className="rounded-md border border-zinc-200 bg-white px-4 py-5 shadow-sm sm:px-8 md:py-7"
+          >
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(260px,1fr)_160px_160px_160px] md:items-center">
+              <div className="flex items-center gap-6">
+                <Skeleton width={64} height={64} />
+                <Skeleton width={180} height={20} />
+              </div>
+
+              <Skeleton width={80} height={20} />
+
+              <Skeleton width={96} height={48} />
+
+              <Skeleton width={80} height={20} />
+            </div>
+          </div>
+        ))}
+
+        <div className="pt-10">
+          <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+            <div />
+
+            <div className="w-full max-w-md justify-self-end border border-zinc-200 bg-white p-8">
+              <Skeleton width={120} height={28} />
+
+              <div className="mt-6 flex flex-col gap-5">
+                <Skeleton height={20} />
+                <Skeleton height={1} />
+                <Skeleton height={20} />
+                <Skeleton height={1} />
+                <Skeleton height={20} />
+              </div>
+
+              <Skeleton
+                className="mt-10"
+                height={56}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
     if (error) return <p>{error.message}</p>;
     if (!cart?.products?.length) return <p>Your cart is empty</p>;
 

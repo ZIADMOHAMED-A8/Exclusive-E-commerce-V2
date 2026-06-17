@@ -4,12 +4,12 @@ import ItemCard from "@/features/auth/components/itemCard";
 import type { Product } from "@/features/types";
 import useGetProducts from "../UseGetProducts";
 import type { ProductsType } from "../types";
-
 import { useRef } from "react";
 import NavigationArrows from "./navigationArrows";
 import StyledLabel from "./styledLabel";
 import CountDown from "./countDown";
 import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
 
 export default function ItemContainer({
   productsType,
@@ -31,7 +31,33 @@ export default function ItemContainer({
   const containerRef = useRef<HTMLDivElement>(null)
 
   if (isPending) {
-    return <p>laoding....</p>;
+    return (
+      <section className="flex flex-col gap-8 p-4 overflow-hidden max-w-full">
+        <StyledLabel>{StyledLabelText}</StyledLabel>
+
+        <div className="flex gap-4 overflow-hidden">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <div
+              key={index}
+              className="min-w-[270px] flex flex-col gap-3"
+            >
+              {/* Image */}
+              <Skeleton height={250} borderRadius={4}   baseColor="#e5e7eb"
+  highlightColor="#f3f4f6" />
+
+              {/* Title */}
+              <Skeleton height={20} width="80%" />
+
+              {/* Price */}
+              <Skeleton height={20} width="40%" />
+
+              {/* Rating */}
+              <Skeleton height={16} width="60%" />
+            </div>
+          ))}
+        </div>
+      </section>
+    );
   }
   if (error) {
     return <p>{error.message}</p>;
@@ -72,14 +98,14 @@ export default function ItemContainer({
 
 
 
-      <div ref={containerRef} className="flex overflow-x-hidden gap-4">
+      <div ref={containerRef} className="flex overflow-x-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:overflow-x-hidden gap-4">
         {data.products.map((item: Product) => (
           <ItemCard key={item.id} item={item} />
         ))}
       </div>
       {viewProductsButton &&
         <div className="flex justify-center">
-          <button  className=" px-8 py-4 text-white  bg-[#db4444]"><Link href={'/products'}>View All Products</Link></button>
+          <button className=" px-8 py-4 text-white  bg-[#db4444]"><Link href={'/products'}>View All Products</Link></button>
         </div>
       }
     </section>

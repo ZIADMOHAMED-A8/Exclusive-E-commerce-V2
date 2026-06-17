@@ -11,7 +11,7 @@ import { Heart, RotateCcw, Truck } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
-
+import Skeleton from "react-loading-skeleton";
 const COLORS = [
   { name: "Red", value: "#EF4444" },
   { name: "Blue", value: "#2563EB" },
@@ -21,7 +21,7 @@ const COLORS = [
 const SIZES = ["XS", "S", "M", "L", "XL"] as const;
 
 export default function ItemPage() {
-  const toast=useToast()
+  const toast = useToast()
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const dispatch = useAppDispatch();
@@ -55,7 +55,97 @@ export default function ItemPage() {
       : defaultImage;
 
   if (!itemId) return null;
-  if (isLoading) return <p className="px-4 py-8">loading...</p>;
+  if (isLoading) {
+    return (
+      <main className="mx-auto w-full max-w-6xl px-4 py-10">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+          {/* Images */}
+          <section className="flex flex-col gap-4">
+            <Skeleton height={500} />
+
+            <div className="flex gap-3">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  width={80}
+                  height={80}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Details */}
+          <section className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
+              <Skeleton height={40} width="80%" />
+
+              <div className="flex gap-2">
+                <Skeleton width={120} height={20} />
+                <Skeleton width={100} height={20} />
+              </div>
+
+              <Skeleton width={140} height={35} />
+
+              <Skeleton count={4} />
+            </div>
+
+            <Skeleton height={1} />
+
+            {/* Colors */}
+            <div className="flex items-center gap-4">
+              <Skeleton width={60} height={24} />
+
+              <div className="flex gap-3">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    circle
+                    width={24}
+                    height={24}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Sizes */}
+            <div className="flex items-center gap-4">
+              <Skeleton width={60} height={24} />
+
+              <div className="flex gap-2">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    width={40}
+                    height={40}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Quantity + buttons */}
+            <div className="flex flex-wrap gap-4">
+              <Skeleton width={140} height={48} />
+              <Skeleton width={220} height={48} />
+              <Skeleton circle width={48} height={48} />
+            </div>
+
+            {/* Delivery Box */}
+            <div className="rounded-md border border-zinc-200">
+              <div className="p-5 flex flex-col gap-2">
+                <Skeleton width={180} height={24} />
+                <Skeleton count={2} />
+              </div>
+
+              <div className="border-t border-zinc-200 p-5 flex flex-col gap-2">
+                <Skeleton width={180} height={24} />
+                <Skeleton count={2} />
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    );
+  }
   if (error) return <p className="px-4 py-8">error loading item</p>;
   if (!item) return null;
 
@@ -85,9 +175,8 @@ export default function ItemPage() {
                     key={src}
                     type="button"
                     onClick={() => setActiveImage({ itemId: item.id, src })}
-                    className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-md border bg-white ${
-                      isActive ? "border-zinc-900" : "border-zinc-200"
-                    }`}
+                    className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-md border bg-white ${isActive ? "border-zinc-900" : "border-zinc-200"
+                      }`}
                     aria-label="Select image"
                   >
                     <Image
@@ -144,9 +233,8 @@ export default function ItemPage() {
                       key={c.value}
                       type="button"
                       onClick={() => setSelectedColor(c)}
-                      className={`h-6 w-6 rounded-full border ${
-                        isSelected ? "border-zinc-900" : "border-zinc-400"
-                      }`}
+                      className={`h-6 w-6 rounded-full border ${isSelected ? "border-zinc-900" : "border-zinc-400"
+                        }`}
                       style={{ backgroundColor: c.value }}
                       aria-label={`Color ${c.name}`}
                     />
@@ -165,11 +253,10 @@ export default function ItemPage() {
                       key={s}
                       type="button"
                       onClick={() => setSelectedSize(s)}
-                      className={`h-10 w-10 rounded-md border text-sm font-medium transition ${
-                        isSelected
+                      className={`h-10 w-10 rounded-md border text-sm font-medium transition ${isSelected
                           ? "border-zinc-900 bg-zinc-900 text-white"
                           : "border-zinc-300 bg-white text-zinc-900 hover:border-zinc-400"
-                      }`}
+                        }`}
                       aria-label={`Size ${s}`}
                     >
                       {s}
@@ -204,8 +291,8 @@ export default function ItemPage() {
 
               <button
                 type="button"
-                
-                onClick={() =>{
+
+                onClick={() => {
                   dispatch(
                     cartActions.addItem({
                       id: item.id,
@@ -215,7 +302,7 @@ export default function ItemPage() {
                     })
                   )
                   toast.success(`${quantity} ${item.title} Has Been Added To Your Cart. `)
-                  }
+                }
                 }
                 disabled={item.stock <= 0}
                 className="h-12 min-w-56 rounded-md bg-[#db4444] px-8 text-base font-medium text-white hover:bg-[#c63c3c] disabled:cursor-not-allowed disabled:opacity-60"

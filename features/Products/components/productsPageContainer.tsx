@@ -5,7 +5,7 @@ import type { Product } from "@/features/types";
 import Link from "next/link";
 import { PRODUCTS_PAGE_LIMIT } from "../ProductListingAction";
 import useGetProductListing from "../UseGetProductListing";
-
+import Skeleton from "react-loading-skeleton";
 function formatMode(mode?: string) {
   if (!mode) {
     return "All Products";
@@ -42,7 +42,50 @@ export default function ProductsPageContainer({
   const { data, isPending, error } = useGetProductListing({ mode, page });
 
   if (isPending) {
-    return <p className="px-4 py-8">loading...</p>;
+    return (
+      <main className="flex flex-col gap-8 px-6 py-10">
+        <section className="flex flex-col gap-2">
+          <Skeleton width={80} height={20} />
+
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <Skeleton width={280} height={40} />
+              <div className="mt-2">
+                <Skeleton width={180} height={18} />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid w-full grid-cols-[repeat(auto-fit,minmax(14rem,14rem))] justify-center gap-6">
+          {Array.from({ length: 12 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-3"
+            >
+              <Skeleton height={250} />
+              <Skeleton height={20} width="80%" />
+              <Skeleton height={20} width="40%" />
+              <Skeleton height={16} width="60%" />
+            </div>
+          ))}
+        </section>
+
+        <nav className="flex flex-wrap items-center justify-center gap-2">
+          <Skeleton width={90} height={40} />
+
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              width={40}
+              height={40}
+            />
+          ))}
+
+          <Skeleton width={90} height={40} />
+        </nav>
+      </main>
+    );
   }
 
   if (error) {
@@ -91,11 +134,10 @@ export default function ProductsPageContainer({
         <Link
           href={getProductsHref(page - 1, mode)}
           aria-disabled={!canGoPrevious}
-          className={`rounded-md border px-4 py-2 text-sm font-medium ${
-            canGoPrevious
+          className={`rounded-md border px-4 py-2 text-sm font-medium ${canGoPrevious
               ? "border-zinc-300 text-zinc-900 hover:border-zinc-500"
               : "pointer-events-none border-zinc-200 text-zinc-400"
-          }`}
+            }`}
         >
           Previous
         </Link>
@@ -105,11 +147,10 @@ export default function ProductsPageContainer({
             <Link
               key={pageNumber}
               href={getProductsHref(pageNumber, mode)}
-              className={`flex h-10 w-10 items-center justify-center rounded-md border text-sm font-medium ${
-                pageNumber === page
+              className={`flex h-10 w-10 items-center justify-center rounded-md border text-sm font-medium ${pageNumber === page
                   ? "border-[#db4444] bg-[#db4444] text-white"
                   : "border-zinc-300 text-zinc-900 hover:border-zinc-500"
-              }`}
+                }`}
             >
               {pageNumber}
             </Link>
@@ -117,14 +158,13 @@ export default function ProductsPageContainer({
         )}
 
         <Link
-        
+
           href={getProductsHref(page + 1, mode)}
           aria-disabled={!canGoNext}
-          className={`rounded-md border px-4 py-2 text-sm font-medium ${
-            canGoNext
+          className={`rounded-md border px-4 py-2 text-sm font-medium ${canGoNext
               ? "border-zinc-300 text-zinc-900 hover:border-zinc-500"
               : "pointer-events-none border-zinc-200 text-zinc-400"
-          }`}
+            }`}
         >
           Next
         </Link>

@@ -14,7 +14,7 @@ const imagesArr = [
     banner_4
 ]
 
-const delayTime = 5000
+const delayTime = 3000
 
 export default function HeroSection() {
 

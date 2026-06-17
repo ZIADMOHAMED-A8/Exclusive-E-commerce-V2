@@ -4,7 +4,7 @@ import "./globals.css";
 import Providers from "./providers";
 import TopBar from "./_components/topBar";
 import LayoutWrapper from "./_components/layoutWrapper";
-
+import 'react-loading-skeleton/dist/skeleton.css';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
