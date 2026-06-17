@@ -47,24 +47,43 @@ export default function HeroSection() {
         console.log(active, "before")
 
         if (timer.current === null) return
-        setActive(prev => (prev - 1 + imagesArr.length) % imagesArr.length)
-        console.log('gzr')
-        clearInterval(timer.current)
-        timer.current = setInterval(() => {
-            handleActive()
-            console.log(active)
-        }, delayTime);
+
+
+    }
+    function handleChange(amount: number) {
+        if (timer.current === null) return
+        if (amount >= 1) {
+            setActive(prev => (prev + amount) % imagesArr.length)
+            clearInterval(timer.current)
+            timer.current = setInterval(() => {
+                handleActive()
+                console.log(active)
+            }, delayTime);
+        }
+        else if (amount < 1) {
+            setActive(prev => (prev - 1 + imagesArr.length) % imagesArr.length)
+            clearInterval(timer.current)
+            timer.current = setInterval(() => {
+                handleActive()
+                console.log(active)
+            }, delayTime);
+        }
+
+
 
     }
     return (
         <section className='relative p-0'>
+            <span className='absolute flex gap-2 bottom-2 left-1/2 z-10'>{imagesArr.map((item, idx) => idx === active ? 
+            <button onClick={() => { handleChange(idx-active)}} className='h-2 cursor-pointer rounded-2xl w-10 duration-500 bg-gray-400 block'></button> : 
+            <button onClick={() => { handleChange(idx-active)}} className='h-2 rounded-2xl w-10 cursor-pointer bg-white duration-500 block'></button>)}</span>
             <button onClick={() => {
-                handleBackWardChange()
+                handleChange(-1)
             }} className='rounded-4xl cursor-pointer bg-white p-2 opacity-50 absolute top-1/2 left-2 -translate-y-1/2 z-10'>
                 <ArrowLeft className='' />
             </button>
             <button onClick={() => {
-                handleForwardChange()
+                handleChange(1)
             }} className='rounded-4xl cursor-pointer bg-white p-2 opacity-50 absolute top-1/2 right-2 -translate-y-1/2 z-10'>
                 <ArrowRight />
             </button>
@@ -73,12 +92,14 @@ export default function HeroSection() {
                 src={item}
                 alt="hero_banner"
                 width={1440}
+                key={item.src}
                 height={300}
                 quality={100}
                 priority
                 className="w-full duration-1000 h-auto opacity-100"
             /> : <Image
                 src={item}
+                key={item.src}
                 alt="hero_banner"
                 width={1440}
                 height={300}
@@ -90,3 +111,4 @@ export default function HeroSection() {
 
     )
 }
+
