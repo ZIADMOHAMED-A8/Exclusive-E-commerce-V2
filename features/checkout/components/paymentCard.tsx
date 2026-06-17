@@ -1,6 +1,13 @@
+import type { LucideIcon } from "lucide-react";
 
+type PaymentCardProps = {
+    Icon: LucideIcon;
+    label: string;
+    desc: string;
+    amount: string;
+};
 
-export default function PaymentCard({Icon,label,desc,amount}){
+export default function PaymentCard({Icon,label,desc,amount}: PaymentCardProps){
     return (
         <>
             <article className="flex-col gap-1 hidden md:flex bg-white items-center rounded-2xl p-4">

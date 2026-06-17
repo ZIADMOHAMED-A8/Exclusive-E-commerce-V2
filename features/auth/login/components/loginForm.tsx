@@ -14,12 +14,12 @@ export default function LoginForm() {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
     const {mutateAsync,isPending}=UseLoginAction()
     async function onSubmit(data: LoginFormValues) {
-    console.log(data)
+    
     await mutateAsync(data)
 }
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="pt-24 flex-2 flex flex-col gap-10 [&_*]:min-w-[300px]   ">
-            <h1 className="text-4xl font-bold  ">Sign in to Execlusive V2</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-10 lg:flex-1 lg:pt-24">
+            <h1 className="text-3xl font-bold sm:text-4xl">Sign in to Execlusive V2</h1>
             <p className="-mt-6">Enter your details below</p>
             <section className=" flex flex-col gap-4"   >
                 <FormInput type={'email'} placeHolder={'E-mail'} register={register} name={'email'}   ></FormInput>

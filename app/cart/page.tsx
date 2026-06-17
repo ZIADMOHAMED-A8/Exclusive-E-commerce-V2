@@ -20,7 +20,7 @@ export default function CartPage() {
     const dispatch = useAppDispatch();
     const cart = (data as { products?: CartItem[] } | null | undefined) ?? null;
     const gridCols =
-        "grid grid-cols-[minmax(260px,1fr)_160px_160px_160px] items-center";
+        "grid grid-cols-1 gap-4 md:grid-cols-[minmax(260px,1fr)_160px_160px_160px] md:items-center";
 
     if (isLoading) return <p>loading...</p>;
     if (error) return <p>{error.message}</p>;
@@ -32,7 +32,7 @@ export default function CartPage() {
 
                 {/* Header */}
                 <div
-                    className={`rounded-md border border-zinc-200 bg-white px-8 py-6 shadow-sm ${gridCols}`}
+                    className={`hidden rounded-md border border-zinc-200 bg-white px-8 py-6 shadow-sm md:grid ${gridCols}`}
                 >
                     <p className="text-sm font-medium text-zinc-900">Product</p>
                     <p className="text-sm font-medium text-zinc-900">Price</p>
@@ -44,7 +44,7 @@ export default function CartPage() {
         {cart.products.map((item) => (
           <div
             key={item.id}
-            className={`rounded-md border border-zinc-200 bg-white px-8 py-7 shadow-sm ${gridCols}`}
+            className={`rounded-md border border-zinc-200 bg-white px-4 py-5 shadow-sm sm:px-8 md:py-7 ${gridCols}`}
           >
                         {/* Product */}
                         <div className="flex items-center gap-6">
@@ -63,12 +63,14 @@ export default function CartPage() {
                         </div>
 
                         {/* Price */}
-                        <p className="text-sm font-medium text-zinc-900">
+                        <p className="flex items-center justify-between text-sm font-medium text-zinc-900 md:block">
+                            <span className="md:hidden">Price</span>
                             ${item.price}
                         </p>
 
                         {/* Quantity */}
-                        <div className="flex items-center">
+                        <div className="flex items-center justify-between gap-4 md:block">
+                            <span className="text-sm font-medium text-zinc-900 md:hidden">Quantity</span>
                             <input
                                 type="number"
                                 min={0}
@@ -87,7 +89,8 @@ export default function CartPage() {
                         </div>
 
                         {/* Subtotal */}
-                        <p className="text-sm font-medium text-zinc-900">
+                        <p className="flex items-center justify-between text-sm font-medium text-zinc-900 md:block">
+                            <span className="md:hidden">Subtotal</span>
                             ${item.total}
                         </p>
           </div>

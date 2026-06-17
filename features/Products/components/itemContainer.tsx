@@ -46,9 +46,9 @@ export default function ItemContainer({
         {StyledLabelText}
       </StyledLabel>
       {flasehSale && arrowsVisible ?
-        <div className="flex gap-2 items-center  justify-between   ">
-          <div className="flex gap-16 items-center">
-            <h1 className="text-3xl font-bold">{headerText}</h1>
+        <div className="flex flex-wrap gap-6 items-center justify-between">
+          <div className="flex flex-wrap gap-x-16 gap-y-6 items-center">
+            <h1 className="text-2xl font-bold sm:text-3xl">{headerText}</h1>
             {flasehSale && <CountDown></CountDown>}
           </div>
           <div className="flex items-center gap-2">
@@ -60,8 +60,8 @@ export default function ItemContainer({
           <p>flashsale</p>
           :
           arrowsVisible ?
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-bold">{headerText}</h1>
+            <div className="flex justify-between gap-4 items-center">
+              <h1 className="text-2xl font-bold sm:text-3xl">{headerText}</h1>
               <div className="flex gap-2 items-center  justify-end  ">
                 <NavigationArrows containerRef={containerRef}></NavigationArrows>
               </div>

@@ -1,27 +1,19 @@
 import {
   FieldErrors,
-  UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
-
-type PaymentForm = {
-  CardNumber: string;
-  CVV: string;
-  Expiry: string;
-};
+import { CheckoutForm } from "@/features/types";
 
 type AddingCardFormProps = {
-  errors: FieldErrors<PaymentForm>;
+  errors: FieldErrors<CheckoutForm>;
   // handleSubmit: UseFormHandleSubmit<PaymentForm>;
-  register: UseFormRegister<PaymentForm>;
-  onSubmit: (data: PaymentForm) => void;
+  register: UseFormRegister<CheckoutForm>;
 };
 
 export default function AddingCardForm({
   errors,
   // handleSubmit,
   register,
-  onSubmit,
 }: AddingCardFormProps) {
   return (
     <div className="flex flex-col gap-6">

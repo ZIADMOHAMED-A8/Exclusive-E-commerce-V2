@@ -72,8 +72,8 @@ export default function CategoriesContainer() {
   return (
     <section className="flex flex-col gap-8 p-4 overflow-hidden max-w-full">
       <StyledLabel>Categories</StyledLabel>
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Browse By Category</h1>
+      <div className="flex justify-between gap-4 items-center">
+        <h1 className="text-2xl font-bold sm:text-3xl">Browse By Category</h1>
         <div className="flex gap-2 items-center justify-end">
           <NavigationArrows containerRef={containerRef}></NavigationArrows>
         </div>

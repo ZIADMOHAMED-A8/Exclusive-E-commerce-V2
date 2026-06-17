@@ -2,10 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import useSearch from "./hooks/useSearch";
-import { ProductsType } from "@/features/Products/types";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import type { Product } from "@/features/types";
 
 export default function SearchBar() {
     const [query, setQuery] = useState("");
@@ -13,20 +12,19 @@ export default function SearchBar() {
 
     const { data, isError, isLoading, error } = useSearch(query);
     const [open, setOpen] = useState(false)
-    const listRef = useRef(null)
-    const router = useRouter()
+    const listRef = useRef<HTMLDivElement | null>(null)
     useEffect(() => {
         const handleDocumentClick = () => {
             setOpen(false);
         };
 
-        const handleListClick = (e: { stopPropagation: () => void; }) => {
-            console.log('stooped')
+        const handleListClick = (e: Event) => {
             e.stopPropagation();
         };
+        const listNode = listRef.current;
         document.addEventListener('click', handleDocumentClick)
-        if (listRef.current) {
-            listRef?.current?.addEventListener('click', handleListClick)
+        if (listNode) {
+            listNode.addEventListener('click', handleListClick)
 
         }
         return () => {
@@ -34,7 +32,7 @@ export default function SearchBar() {
                 clearTimeout(timerRef.current);
             }
             document.removeEventListener('click', handleDocumentClick)
-            listRef?.current?.removeEventListener('click', handleListClick)
+            listNode?.removeEventListener('click', handleListClick)
         };
     }, []);
 
@@ -80,15 +78,9 @@ export default function SearchBar() {
                             </li>
                         )}
 
-                    {data?.products?.map((product) => (
-                        <Link href={`/item/${product.id}`}>
+                    {data?.products?.map((product: Product) => (
+                        <Link key={product.id} href={`/item/${product.id}`}>
                             <li
-                                onClick={() => {
-                                    alert('fzr')
-                                    router.push(`/item/${product.id}`)
-                                    console.log('gzr')
-                                }}
-                                key={product.id}
                                 className="flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors duration-150 cursor-pointer border-b border-gray-100 last:border-b-0"
                             >
                                 <Image

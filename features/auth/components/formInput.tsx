@@ -1,13 +1,16 @@
-import { UseFormRegister } from "react-hook-form";
+import { Path, UseFormRegister } from "react-hook-form";
 import { LoginFormValues } from "../login/types";
 import { signUpFormValues } from "../signup/types";
 
-type Props = {
+type AuthFormValues = LoginFormValues | signUpFormValues;
+type AuthFieldName = keyof signUpFormValues;
+
+type Props<T extends AuthFormValues> = {
   type: string;
   placeHolder: string;
-  register: UseFormRegister<signUpFormValues>;
-  name: 'email' | 'password' | 'name' | 'confirmPassword';
-  password: string | undefined
+  register: UseFormRegister<T>;
+  name: Extract<keyof T, AuthFieldName>;
+  password?: string
 };
 type regexTypes = { email: RegExp, password: RegExp, name: RegExp, confirmPassword: RegExp }
 
@@ -20,20 +23,20 @@ const valuesRegex: regexTypes = {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
 };
 
-export default function FormInput(props: Props) {
+export default function FormInput<T extends AuthFormValues>(props: Props<T>) {
   if (props.name !== 'confirmPassword') {
     return (
       <input
         type={props.type}
         placeholder={props.placeHolder}
-        {...props.register(props.name, {
+        {...props.register(props.name as unknown as Path<T>, {
           required: { value: true, message: `${props.name} is required` },
           validate: (value) =>
-            valuesRegex[props.name].test(value) ||
-              props.name === 'email' ? `Invalid ${props.name} format` : 'Password Should Contain only Uppercase and lowercase letters,a number and a special symbol at least'
+            valuesRegex[props.name as AuthFieldName].test(value) ||
+             'invalid'
           ,
         })}
-        className="w-1/2 pl-4 placeholder:b-40  border-b border-[#b9bbbc] appearance-none focus:ring-0 focus:outline-0 "
+        className="w-full pl-4 placeholder:b-40 border-b border-[#b9bbbc] appearance-none focus:ring-0 focus:outline-0 sm:max-w-md"
       />
     );
   }
@@ -41,13 +44,13 @@ export default function FormInput(props: Props) {
     <input
       type={props.type}
       placeholder={props.placeHolder}
-      {...props.register(props.name, {
+      {...props.register(props.name as unknown as Path<T>, {
         required: { value: true, message: `Confirm password is required` },
         validate: (value) =>
           value === props.password ||
           `Passwords dont match`,
       })}
-      className="w-1/2 pl-4 placeholder:b-40  border-b border-[#b9bbbc] appearance-none focus:ring-0 focus:outline-0 "
+      className="w-full pl-4 placeholder:b-40 border-b border-[#b9bbbc] appearance-none focus:ring-0 focus:outline-0 sm:max-w-md"
     />
   );
 }

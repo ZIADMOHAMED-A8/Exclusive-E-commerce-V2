@@ -9,7 +9,7 @@ export default function Home() {
   
   return (
     <>
-    <div className="p-15">
+    <div className="px-4 py-6 sm:px-8 lg:p-15">
       <HeroSection></HeroSection>
       <ItemContainer viewProductsButton={false} headerText="Flash sales" StyledLabelText="Today's" productsType="all" flasehSale={true} arrowsVisible={true}></ItemContainer>
       <CategoriesContainer></CategoriesContainer>

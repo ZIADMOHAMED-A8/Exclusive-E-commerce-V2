@@ -5,10 +5,10 @@ export default function FormButton({ children,isLoading }: PropsWithChildren<{
 }>) {
   if(isLoading){
     return (
-          <button disabled className={ "w-1/2 h-16 text-white cursor-pointer  duration-300 bg-gray-300"}>{children}</button>
+          <button disabled className={ "h-16 w-full max-w-md text-white cursor-pointer duration-300 bg-gray-300"}>{children}</button>
     )
   }
   return (
-    <button className={ "w-1/2 h-16 text-white cursor-pointer bg-[#db4444]"}>{children}</button>
+    <button className={ "h-16 w-full max-w-md text-white cursor-pointer bg-[#db4444]"}>{children}</button>
   );
 }

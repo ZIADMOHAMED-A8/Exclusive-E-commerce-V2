@@ -75,8 +75,7 @@ export default function ProductsPageContainer({
 
       {data.products.length ? (
         <section
-          className="grid items-center justify-center w-full gap-6"
-          style={{ gridTemplateColumns: "repeat(4, 224px)" }}
+          className="grid w-full grid-cols-[repeat(auto-fit,minmax(14rem,14rem))] justify-center gap-6"
         >
           {data.products.map((product: Product) => (
             <ItemCard key={product.id} item={product} />

@@ -24,8 +24,7 @@ export default function Page() {
     const toast = useToast()
     const router = useRouter()
     const methods = useForm<CheckoutForm>();
-    console.log(methods)
-    async function onSubmit(data: CheckoutForm) {
+    async function onSubmit() {
         await new Promise((res) => setTimeout(() => {
             res('')
         }, 1000))
@@ -37,7 +36,7 @@ export default function Page() {
     }
     if (!isLoading) {
         return (
-            <div className="mx-16   py-8">
+            <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-8">
                 <FormProvider {...methods}>
                     <form
                         onSubmit={methods.handleSubmit(onSubmit)}
