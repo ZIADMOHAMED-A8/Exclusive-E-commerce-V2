@@ -33,39 +33,54 @@ export default function HeroSection() {
     }, [])
 
     function handleChange(amount: number) {
-        if (timer.current === null) return
         if (amount >= 1) {
             setActive(prev => (prev + amount) % imagesArr.length)
-            clearInterval(timer.current)
-            timer.current = setInterval(() => {
-                setActive(prev => (prev + 1) % imagesArr.length)
-            }, delayTime);
+        } else if (amount < 0) {
+            setActive(prev => (prev + amount + imagesArr.length) % imagesArr.length)
         }
-        else if (amount < 1) {
-            setActive(prev => (prev - 1 + imagesArr.length) % imagesArr.length)
-            clearInterval(timer.current)
-            timer.current = setInterval(() => {
-                setActive(prev => (prev + 1) % imagesArr.length)
-            }, delayTime);
-        }
-
-
+        restartInterval()
+    }
+    function restartInterval() {
+        if (timer.current === null) return
+        clearInterval(timer.current)
+        timer.current = setInterval(() => {
+            setActive(prev => (prev + 1) % imagesArr.length)
+        }, delayTime);
+    }
+    function setAndRestart(idx:number){
+            setActive(idx)
+        restartInterval()
 
     }
+
     return (
         <section className='relative overflow-hidden p-0'>
-            <span className='absolute flex -translate-x-1/2 gap-2 bottom-2 left-1/2 z-10'>{imagesArr.map((item, idx) => idx === active ? 
-            <button key={item.src} onClick={() => { handleChange(idx-active)}} className='h-2 cursor-pointer rounded-2xl w-10 duration-500 bg-gray-400 block'></button> : 
-            <button key={item.src} onClick={() => { handleChange(idx-active)}} className='h-2 rounded-2xl w-10 cursor-pointer bg-white duration-500 block'></button>)}</span>
-            <button onClick={() => {
-                handleChange(-1)
-            }} className='rounded-4xl cursor-pointer bg-white p-2 opacity-50 absolute top-1/2 left-2 -translate-y-1/2 z-10'>
-                <ArrowLeft className='' />
+            {/* Dots */}
+            <span className='absolute flex -translate-x-1/2 gap-1 sm:gap-2 bottom-1 sm:bottom-2 left-1/2 z-10'>
+                {imagesArr.map((item, idx) => (
+                    <button
+                        key={item.src}
+                        onClick={() =>setAndRestart(idx)}
+                        className={`h-1.5 sm:h-2 cursor-pointer rounded-2xl w-5 sm:w-10 duration-500 block ${idx === active ? 'bg-gray-400' : 'bg-white'
+                            }`}
+                    />
+                ))}
+            </span>
+
+            {/* Prev button */}
+            <button
+                onClick={() => handleChange(-1)}
+                className='rounded-full cursor-pointer bg-white p-1 sm:p-2 opacity-50 hover:opacity-80 absolute top-1/2 left-1 sm:left-2 -translate-y-1/2 z-10 duration-300'
+            >
+                <ArrowLeft className='w-4 h-4 sm:w-6 sm:h-6' />
             </button>
-            <button onClick={() => {
-                handleChange(1)
-            }} className='rounded-4xl cursor-pointer bg-white p-2 opacity-50 absolute top-1/2 right-2 -translate-y-1/2 z-10'>
-                <ArrowRight />
+
+            {/* Next button */}
+            <button
+                onClick={() => handleChange(1)}
+                className='rounded-full cursor-pointer bg-white p-1 sm:p-2 opacity-50 hover:opacity-80 absolute top-1/2 right-1 sm:right-2 -translate-y-1/2 z-10 duration-300'
+            >
+                <ArrowRight className='w-4 h-4 sm:w-6 sm:h-6' />
             </button>
 
             <Image
@@ -75,10 +90,8 @@ export default function HeroSection() {
                 height={300}
                 quality={100}
                 priority
-                className="h-auto w-full"
+                className="h-48 sm:h-64 md:h-auto w-full object-cover"
             />
         </section>
-
     )
 }
-
