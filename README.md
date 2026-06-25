@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Exclusive E-Commerce V2 🛍️
 
-## Getting Started
+> A fully refactored, production-grade e-commerce web application built with Next.js, TypeScript, and a feature-sliced architecture.
 
-First, run the development server:
+Exclusive V2 is a complete rewrite of an earlier React + Vite e-commerce project, rebuilt from scratch with modern best practices: TypeScript throughout, Next.js App Router, Redux Toolkit for global state, and a scalable feature-sliced folder structure.
+
+---
+
+## ✨ Features
+
+- **Product Browsing** — Flash sales, best sellers, new arrivals, and category filtering
+- **Category Navigation** — Dynamic category listing and filtering
+- **Product Search** — Searchable product catalog via custom `SearchBar` component
+- **Shopping Cart** — Add, remove, and update cart items with persistent global state (Redux)
+- **Checkout Flow** — Full checkout experience with credit card UI (`react-credit-cards-2`)
+- **Authentication** — User login/signup with protected routes and session handling
+- **Skeleton Loading** — Smooth loading states across all product listings
+- **Responsive Design** — Mobile-first layout with hamburger menu and adaptive navigation
+- **Toast Notifications** — User feedback via react-hot-toast and Sonner
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| State Management | Redux Toolkit + React Redux |
+| Data Fetching | TanStack React Query (v5) |
+| Forms | React Hook Form |
+| UI Components | Lucide React, react-credit-cards-2 |
+| Loading States | react-loading-skeleton |
+| Notifications | react-hot-toast, Sonner |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+
+### Installation
+
+```bash
+git clone https://github.com/ZIADMOHAMED-A8/Exclusive-E-commerce-V2.git
+cd Exclusive-E-commerce-V2
+npm install
+```
+
+### Environment Variables
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_API_URL=your_backend_api_url
+```
+
+### Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+app/
+├── _components/
+│   ├── topBar.tsx          # Responsive navigation with auth & cart
+│   ├── searchBar/          # Product search component
+│   └── layoutWrapper.tsx   # Global layout wrapper
+├── providers.tsx           # Redux + React Query providers
+└── page.tsx                # Home page (flash sales, categories, new arrivals)
 
-To learn more about Next.js, take a look at the following resources:
+features/
+├── auth/                   # Login, signup, session management
+├── cart/                   # Cart state, actions, and UI
+├── Products/               # Product listing and display
+├── Categories/             # Category fetching and display
+├── heroSection/            # Landing hero banner
+└── utils/                  # Shared utilities (auth helpers, etc.)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔄 V1 → V2 Migration Highlights
 
-## Deploy on Vercel
+This project is a complete rewrite of [Exclusive V1](https://github.com/ZIADMOHAMED-A8/Exclusive-Ecommerce-website). Key improvements include:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| | V1 | V2 |
+|---|---|---|
+| Framework | React + Vite | Next.js (App Router) |
+| Language | JavaScript | TypeScript |
+| Architecture | Flat component structure | Feature-sliced design |
+| State Management | Redux (basic) | Redux Toolkit |
+| Data Fetching | Direct dispatches | TanStack React Query |
+| Styling | Tailwind CSS v3 + heavy CSS | Tailwind CSS v4 (utility-first) |
+| Routing | React Router DOM | Next.js file-based routing |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📄 License
+
+This project is for educational purposes.
